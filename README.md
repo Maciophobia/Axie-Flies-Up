@@ -1,6 +1,7 @@
 # Axie-Flies-Up
-A mini-game for the Axie Universe
-Copyright (c) 2018 Qixuan Yu
+  A mini-game for the Axie Universe
+  
+  Copyright (c) 2018 Qixuan Yu
 
   The objective of game Axie Flies Up is to reach your axie as high as you can without hitting any obstacles or falling out of the screen. Use arrow keys to move your axie.
 
