@@ -5,11 +5,10 @@ Created on Thu Jan 17 09:03:27 2019
 @author: Mack
 """
 
-# This game is based on pygame module
+# This game is based on pygame 1.9.1
 import pygame
 from pygame.locals import *
 import random
-import time
 
 # Settings
 WIDTH = 1000
@@ -31,7 +30,7 @@ ACC = 1
 FRI = 0.2
 GRV = 0.7
 
-INIT_PLATFORM_NUM = 13
+INIT_OBSTACLE_NUM = 13
 
 AXIE_L = pygame.transform.scale(pygame.image.load("axie_example_l.png"), (73, 53))
 AXIE_R = pygame.transform.scale(pygame.image.load("axie_example_r.png"), (73, 53))
@@ -163,7 +162,7 @@ class Game():
         # Runtime Initialization
         
         all_sprites = pygame.sprite.Group()
-        all_platforms = pygame.sprite.Group()
+        all_obstacles = pygame.sprite.Group()
         all_grounds = pygame.sprite.Group()
         
         axie = Axie()
@@ -173,14 +172,14 @@ class Game():
         all_sprites.add(ground)
         all_grounds.add(ground)
         
-        while len(all_platforms) < INIT_PLATFORM_NUM:
+        while len(all_obstacles) < INIT_OBSTACLE_NUM:
                 width = random.randrange(50, 100)
                 x = random.randrange(0, WIDTH -width)
                 y = random.randrange(-200, HEIGHT - 200)
-                platform = Platform(x, y, width, 20, OBSTACLE)
-                if not pygame.sprite.spritecollide(platform, all_platforms, False):
-                    all_platforms.add(platform)
-                    all_sprites.add(platform)
+                obstacle = Platform(x, y, width, 20, OBSTACLE)
+                if not pygame.sprite.spritecollide(obstacle, all_obstacles, False):
+                    all_obstacles.add(obstacle)
+                    all_sprites.add(obstacle)
 
         self.level = 0
         
@@ -210,7 +209,7 @@ class Game():
                 axie.pos.y = touchground[0].rect.top
             
             # Game Over Control
-            collision = pygame.sprite.spritecollide(axie, all_platforms, False)
+            collision = pygame.sprite.spritecollide(axie, all_obstacles, False)
             if collision:
                 axie.killed = True
             
@@ -219,7 +218,7 @@ class Game():
                     sprite.rect.y -= max(axie.vel.y, 10)
                     if sprite.rect.bottom < 0:
                         sprite.kill()
-            if len(all_platforms) == 0:
+            if len(all_obstacles) == 0:
                 break
             
             # Camera Control
@@ -228,19 +227,19 @@ class Game():
                 ground.rect.y += abs(axie.vel.y)
                 if ground.rect.top >= HEIGHT:
                     ground.kill()
-                for platform in all_platforms:
-                    platform.rect.y += abs(axie.vel.y)
-                    if platform.rect.top >= HEIGHT:
+                for obstacle in all_obstacles:
+                    obstacle.rect.y += abs(axie.vel.y)
+                    if obstacle.rect.top >= HEIGHT:
                         self.level += 1
-                        platform.kill()
-            while len(all_platforms) < INIT_PLATFORM_NUM:
+                        obstacle.kill()
+            while len(all_obstacles) < INIT_OBSTACLE_NUM:
                 width = random.randrange(50 + self.level, 100 + self.level)
                 x = random.randrange(0, WIDTH -width)
                 y = random.randrange(-600, -20)
-                platform = Platform(x, y, width, 20, OBSTACLE)
-                if not pygame.sprite.spritecollide(platform, all_platforms, False):
-                    all_platforms.add(platform)
-                    all_sprites.add(platform)
+                obstacle = Platform(x, y, width, 20, OBSTACLE)
+                if not pygame.sprite.spritecollide(obstacle, all_obstacles, False):
+                    all_obstacles.add(obstacle)
+                    all_sprites.add(obstacle)
             
             # Frame Update
             all_sprites.draw(self.screen)
