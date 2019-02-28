@@ -67,13 +67,13 @@ class Axie(pygame.sprite.Sprite):
         self.acc = Vec2(0, GRV)
         if not self.killed and not self.out:
             keys_down = pygame.key.get_pressed()
-            if keys_down[K_UP]:
+            if keys_down[K_UP] or keys_down[K_w]:
                 self.acc.y -= ACC
-            if keys_down[K_DOWN]:
+            if keys_down[K_DOWN] or keys_down[K_s]:
                 self.acc.y += ACC
-            if keys_down[K_LEFT]:
+            if keys_down[K_LEFT] or keys_down[K_a]:
                 self.acc.x -= ACC
-            if keys_down[K_RIGHT]:
+            if keys_down[K_RIGHT] or keys_down[K_d]:
                 self.acc.x += ACC
         
         self.acc.x -= self.vel.x * FRI
