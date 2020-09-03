@@ -2,7 +2,7 @@
 """
 Created on Thu Jan 17 09:03:27 2019
 
-@author: Mack
+@author: Maki Yu
 """
 
 # This game is based on pygame 1.9.1
